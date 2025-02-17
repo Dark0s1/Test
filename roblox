@@ -1,10 +1,24 @@
-for _, player in pairs(game.Players:GetPlayers()) do
-    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-        for _, part in pairs(player.Character:GetChildren()) do
-            if part:IsA("BasePart") then
-                part.Color = Color3.new(1, 1, 0) -- Jaune
-                part.Material = Enum.Material.Neon -- Effet lumineux
-            end
-        end
-    end
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+-- Fonction pour ajouter un ESP sur un joueur
+local function addESP(player)
+    if player == LocalPlayer then return end -- On évite de s'appliquer l'ESP à soi-même
+    player.CharacterAdded:Connect(function(character)
+        local highlight = Instance.new("Highlight")
+        highlight.Parent = character
+        highlight.FillColor = Color3.new(1, 1, 0) -- Jaune
+        highlight.FillTransparency = 0.5 -- Semi-transparent
+        highlight.OutlineColor = Color3.new(1, 1, 0) -- Jaune
+        highlight.OutlineTransparency = 0 -- Contour visible
+    end)
 end
+
+-- Appliquer à tous les joueurs actuels
+for _, player in pairs(Players:GetPlayers()) do
+    addESP(player)
+end
+
+-- Appliquer à tous les nouveaux joueurs qui rejoignent
+Players.PlayerAdded:Connect(addESP)
