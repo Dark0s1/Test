@@ -1,0 +1,10 @@
+for _, player in pairs(game.Players:GetPlayers()) do
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        for _, part in pairs(player.Character:GetChildren()) do
+            if part:IsA("BasePart") then
+                part.Color = Color3.new(1, 1, 0) -- Jaune
+                part.Material = Enum.Material.Neon -- Effet lumineux
+            end
+        end
+    end
+end
